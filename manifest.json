@@ -1,0 +1,11 @@
+{
+    "name": "BTC China Monitor",
+    "version": "0.1",
+    "description": "Monitor BTC price in RMB on btcchina.com",
+    "background": { "page": "background.html" },
+    "permissions": ["https://btcchina.com/"],
+    "browser_action": {
+	"default_icon": "icon.png"
+    },
+    "manifest_version" : 2
+}
