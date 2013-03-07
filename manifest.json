@@ -1,18 +1,16 @@
 {
-    "name": "BTC China Monitor",
-    "version": "0.1",
-    "description": "Monitor BTC price in RMB on btcchina.com",
-    "background": { 
-
-	"page": "background.html" 
-    },
-    "icons": {
-	"128": "icon.png"
-    },    
-    "permissions": ["alarms","https://btcchina.com/"],
-    "browser_action": {
-	"default_icon": "icon.png"
-    },
-    "manifest_version" : 2
+   "background": {
+      "page": "background.html"
+   },
+   "browser_action": {
+      "default_icon": "icon.png"
+   },
+   "name": "BTC China Ticker",
+   "description": "Monitor BTC price in RMB on btcchina.com",
+   "icons": {
+      "128": "icon.png"
+   },
+   "manifest_version": 2,
+   "permissions": ["https://btcchina.com/"],
+   "version": "0.1"
 }
-
