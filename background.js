@@ -1,5 +1,5 @@
 // 1 min interval
-var pollInterval = 5*60*1000;
+var pollInterval = 60*1000;
 
 var url = "https://btcchina.com/";
 
