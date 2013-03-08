@@ -1,6 +1,6 @@
 var select = document.getElementById("config");
-select.interval.value = localStorage["interval"] === undefined ? localStorage["interval"] : 1;
-select.animation.checked = localStorage["animation"] === undefined ? localStorage["animation"] : true;
+select.interval.value = localStorage["interval"] === undefined ? 1 : localStorage["interval"] ;
+select.animation.checked = localStorage["animation"] === undefined ? true : localStorage["animation"];
 
 function save_options() {
     var interval = select.interval.value;

@@ -1,7 +1,7 @@
 // 1 min interval
-var interval = localStorage["interval"] === undefined ? localStorage["interval"] : 1;
+var interval = localStorage["interval"] === undefined ? 1 : localStorage["interval"] ;
 var pollInterval = interval * 1000 * 60;
-var fuckAnimation = localStorage["animation"] === undefined ? localStorage["animation"] : true;
+var fuckAnimation = localStorage["animation"] === undefined ? true : localStorage["animation"] ;
 var url = "https://btcchina.com/";
 
 // function scheduleRequest() {
