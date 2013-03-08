@@ -3,14 +3,16 @@
       "page": "background.html"
    },
    "browser_action": {
-      "default_icon": "icon.png"
+       "default_icon": "icon.png",
+       "default_popup": "popup.html"
    },
+   "options_page": "option.html",
    "name": "BTC China Ticker",
-   "description": "Monitor BTC price in RMB on btcchina.com",
+   "description": "btcchina.com 定时查看比特币中国人民币价格",
    "icons": {
       "128": "icon.png"
    },
    "manifest_version": 2,
    "permissions": ["https://btcchina.com/"],
-   "version": "0.11"
+   "version": "0.21"
 }
