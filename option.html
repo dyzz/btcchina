@@ -1,18 +1,22 @@
 <html>
 <head>
+<meta http-equiv=Content-Type content="text/html;charset=utf-8">	
   <title>选项设置</title>
 </head>
 
 <body>
 
+<div style="width:250px">
 <form id="config">
 刷新间隔：<input type="number" min="1" max="10" value="1" name="interval" style="width:3em;"> 分钟 <br>
-动画效果：<input type="checkbox" checked name="animation">
+<!-- 文字效果：<input type="checkbox" checked name="animation"> -->
+监视价格: <select name="watch_type"><option value="lt">小于</option><option value="gt">大于</option></select>
+<input type="number" min="1" value="300" name="watch_price" style="width:5em;"> 元 <br>
 </form>
 
-<br>
 <div id="status"></div>
-<button id="save">Save</button>
+<button id="save">保存</button>
+</div>
 
 <script src="option.js"></script>
 

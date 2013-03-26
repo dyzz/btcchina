@@ -4,7 +4,7 @@
    },
    "browser_action": {
        "default_icon": "icon.png",
-       "default_popup": "popup.html"
+       "default_popup": "option.html"
    },
    "options_page": "option.html",
    "name": "BTC China Ticker",
@@ -14,5 +14,5 @@
    },
    "manifest_version": 2,
    "permissions": ["https://btcchina.com/"],
-   "version": "0.23"
+   "version": "0.25"
 }
