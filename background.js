@@ -67,13 +67,14 @@ function update() {
     $.ajax({    
 	   url:url,
 	   success:function(data){
-	       var rmb_text = $('.infobox:nth(0)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
-	       var usd_text = $('.infobox:nth(1)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
-	       rmb_text = rmb_text.replace(",","");
-	       usd_text = usd_text.replace(",","");
+	       // var rmb_text = $('.infobox:nth(0)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
+	       // var usd_text = $('.infobox:nth(1)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
+	       // rmb_text = rmb_text.replace(",","");
+	       // usd_text = usd_text.replace(",","");
+	       var rmb_text = $('.last_price :first-child',$(data)).text().slice(1);
 	       var rmb = parseInt(rmb_text);
-	       var usd = parseInt(usd_text);
-	       chrome.browserAction.setTitle({'title':'人民币价格:'+parseFloat(rmb_text)+"  "+'美元价格:'+parseFloat(usd_text)});
+	       // var usd = parseInt(usd_text);
+	       chrome.browserAction.setTitle({'title':'人民币价格:'+parseFloat(rmb_text)});
 
 	       var badgeColor;
 	       if(rmb>cur_rmb) {
@@ -110,7 +111,7 @@ function update() {
 
 	       
 	       cur_rmb = rmb;
-	       cur_usd = usd;
+	       // cur_usd = usd;
 
 		   
 	   },
