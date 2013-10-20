@@ -72,6 +72,7 @@ function update() {
 	       // rmb_text = rmb_text.replace(",","");
 	       // usd_text = usd_text.replace(",","");
 	       var rmb_text = $('.last_price :first-child',$(data)).text().slice(1);
+	       rmb_text = rmb_text.replace(",","");
 	       var rmb = parseInt(rmb_text);
 	       // var usd = parseInt(usd_text);
 	       chrome.browserAction.setTitle({'title':'人民币价格:'+parseFloat(rmb_text)});
