@@ -3,7 +3,7 @@ var interval = localStorage["interval"] === undefined ? 1 : localStorage["interv
 var pollInterval = interval * 1000 * 60;
 // var doTextAnimation = localStorage["animation"] === undefined ? true : localStorage["animation"] ;
 var doTextAnimation = true;
-var url = "https://btcchina.com/";
+var url = "https://www.btcchina.com/";
 
 // cur rmb and usd price
 var cur_rmb=0;
