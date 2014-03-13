@@ -13,6 +13,6 @@
 	"128": "icon.png"
     },
     "manifest_version": 2,
-    "permissions": ["https://*.btcchina.com/"],
-    "version": "0.291"
+    "permissions": ["https://*.btcchina.com/","http://info.btc123.com/*"],
+    "version": "0.292"
 }
