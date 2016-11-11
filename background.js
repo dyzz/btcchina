@@ -1,14 +1,14 @@
 // load options
-var interval = localStorage["interval"] === undefined ? 1 : localStorage["interval"] ;
+var interval = localStorage["interval"] === undefined ? 1 : localStorage["interval"];
 var pollInterval = interval * 1000 * 60;
 // var doTextAnimation = localStorage["animation"] === undefined ? true : localStorage["animation"] ;
 var doTextAnimation = true;
 
-var url = "http://info.btc123.com/lib/jsonProxyEx.php?type=btcchinaTicker";
+var url = "https://data.btcchina.com/data/ticker";
 
 // cur rmb and usd price
-var cur_rmb=0;
-var cur_usd=0;
+var cur_rmb = 0;
+var cur_usd = 0;
 
 // badge icon animation
 var canvas = document.getElementById('canvas');
@@ -21,110 +21,107 @@ var loopTimer;
 var animDelay = 10;
 
 function startAnimate() {
-    stopAnimateLoop();
-    animTimer = setInterval(iconAnimation, animDelay);
-    setTimeout(stopAnimate, 2000);
-    loopTimer = setTimeout(startAnimate, 10000);
+  stopAnimateLoop();
+  animTimer = setInterval(iconAnimation, animDelay);
+  setTimeout(stopAnimate, 2000);
+  loopTimer = setTimeout(startAnimate, 10000);
 }
 
 function stopAnimate() {
-    if (animTimer != null) {
-	clearTimeout(animTimer);
-    }      
-    chrome.browserAction.setIcon({ path: "icon.png" });
-    rotation = 1;
-    factor = 1;
+  if (animTimer != null) {
+    clearTimeout(animTimer);
+  }
+  chrome.browserAction.setIcon({
+    path: "icon.png"
+  });
+  rotation = 1;
+  factor = 1;
 }
 
 function stopAnimateLoop() {
-   if (loopTimer != null) {
-      clearTimeout(loopTimer);
-   }
-   stopAnimate();
+  if (loopTimer != null) {
+    clearTimeout(loopTimer);
+  }
+  stopAnimate();
 }
 
 function iconAnimation() {
-   canvasContext.save();
-   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-   canvasContext.translate(Math.ceil(canvas.width / 2), Math.ceil(canvas.height / 2));
-   canvasContext.rotate(rotation * 2 * Math.PI);
-   canvasContext.drawImage(gfx, -Math.ceil(canvas.width / 2), -Math.ceil(canvas.height / 2));
-   canvasContext.restore();
+  canvasContext.save();
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  canvasContext.translate(Math.ceil(canvas.width / 2), Math.ceil(canvas.height / 2));
+  canvasContext.rotate(rotation * 2 * Math.PI);
+  canvasContext.drawImage(gfx, -Math.ceil(canvas.width / 2), -Math.ceil(canvas.height / 2));
+  canvasContext.restore();
 
-   rotation += 0.01 * factor;
+  rotation += 0.01 * factor;
 
-   if (rotation <= 0.9 && factor < 0)
-      factor = 1;
-   else if (rotation >= 1.1 && factor > 0)
-      factor = -1;
+  if (rotation <= 0.9 && factor < 0) {
+    factor = 1;
+  } else if (rotation >= 1.1 && factor > 0) {
+    factor = -1;
+  }
 
-   chrome.browserAction.setIcon({
-      imageData: canvasContext.getImageData(0, 0, canvas.width, canvas.height)
-   });
+  chrome.browserAction.setIcon({
+    imageData: canvasContext.getImageData(0, 0, canvas.width, canvas.height)
+  });
 }
 
 // get price and update badge
 function update() {
-    $.ajax({    
-            url:url,
-	    success:function(data){
-	       // var rmb_text = $('.infobox:nth(0)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
-	       // var usd_text = $('.infobox:nth(1)  tr:nth(1) td:nth(1)',$(data)).html().slice(1);
-	       // rmb_text = rmb_text.replace(",","");
-	     // usd_text = usd_text.replace(",","");
-	       var result = JSON.parse(data);
-	       var rmb_text = result.ticker.last;
-	       var rmb = parseInt(rmb_text);
-	       // var usd = parseInt(usd_text);
-	       chrome.browserAction.setTitle({'title':'人民币价格:'+parseFloat(rmb_text)});
+  $.getJSON(url, function(data) {
+    console.log(data);
+    var result = data;
+    var rmb_text = result.ticker.last;
+    var rmb = parseInt(rmb_text);
 
-	       var badgeColor;
-	       if(rmb>cur_rmb) {
-		   badgeColor = '#C43E44';
-	       } else if(rmb==cur_rmb) {
-		   badgeColor = '#78B9FF';
-	       } else {
-		   badgeColor = '#9C6';
-	       }
-	       var text = rmb + "";
-	       if(doTextAnimation) {
-	       	   var animator = new BadgeTextAnimator ( {
-	       						      text: text,
-	       						      interval: 200, 
-	       						      repeat: false, 
-	       						      size: text.length, 
-							      color: badgeColor 
-	       						  } );
-	       	   animator.animate ();
-	       } else {
-	       	   chrome.browserAction.setBadgeText({'text':rmb});
-	       };
-	       
-	       var watch_price = parseInt(localStorage["watch_price"]);
-	       var watch_type = localStorage["watch_type"];
+    chrome.browserAction.setTitle({
+      'title': '人民币价格:' + parseFloat(rmb_text)
+    });
 
-	       stopAnimateLoop();
+    var badgeColor;
+    if (rmb > cur_rmb) {
+      badgeColor = '#C43E44';
+    } else if (rmb == cur_rmb) {
+      badgeColor = '#78B9FF';
+    } else {
+      badgeColor = '#9C6';
+    }
+    var text = rmb + "";
+    if (doTextAnimation) {
+      var animator = new BadgeTextAnimator({
+        text: text,
+        interval: 200,
+        repeat: false,
+        size: text.length,
+        color: badgeColor
+      });
+      animator.animate();
+    } else {
+      chrome.browserAction.setBadgeText({
+        'text': rmb
+      });
+    }
+    ;
 
-	       if( (watch_type == "lt" && rmb < watch_price ) ||
-		   (watch_type == "gt" && rmb > watch_price )
-		 ) {
-		     startAnimate() ;
-		 } 
+    var watch_price = parseInt(localStorage["watch_price"]);
+    var watch_type = localStorage["watch_type"];
 
-	       
-	       cur_rmb = rmb;
-	       // cur_usd = usd;
+    stopAnimateLoop();
 
-		   
-	   },
-	   error:function(err){
-	       chrome.browserAction.setBadgeText({'text':"?"});
-	   }
-	 }
-	);
+    if ((watch_type == "lt" && rmb < watch_price) ||
+      (watch_type == "gt" && rmb > watch_price)
+    ) {
+      startAnimate();
+    }
+
+
+    cur_rmb = rmb;
+    // cur_usd = usd;
+
+  });
 }
 
 
 // set timer with update()
-setInterval(update,pollInterval);
+setInterval(update, pollInterval);
 update();
